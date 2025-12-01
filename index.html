@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 Uma Mensagem de Amor para Você</title>
+    <style>
+        /* Estilos básicos para a página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fce4ec; /* Rosa claro, cor do amor */
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        #mensagem {
+            font-size: 1.6em;
+            color: #d81b60; /* Vermelho vibrante */
+            margin-top: 25px;
+            margin-bottom: 25px;
+            font-style: italic;
+            line-height: 1.5;
+            min-height: 100px; /* Garante que o box não 'pule' */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            color: #880e4f; /* Vinho */
+            margin-bottom: 5px;
+            font-size: 2em;
+        }
+        .day-indicator {
+            color: #d81b60;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        small {
+            color: #9c27b0;
+            display: block;
+            margin-top: 15px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💖 Sua Dose Diária de Carinho 💖</h1>
+    <div class="day-indicator" id="dia-do-ano">Carregando mensagem...</div>
+    <p id="mensagem">Aguarde, sua mensagem de amor está chegando...</p>
+    <small>_Feito com Amor em Impressão 3D e Tecnologia_</small>
+</div>
+
+<script>
+    
+    // ====================================================================
+    // 🚩 PASSO 1: EDITE O NOME AQUI! 🚩
+    // Insira o nome da pessoa exatamente como você quer que ele apareça.
+    // Ex: "Juliana", "Meu Amor", "Vida"
+    // ====================================================================
+    const nomeDoPresenteado = "Pedro"; 
+    // ====================================================================
+
+    // --- 2. A LISTA DE FRASES (365) ---
+    // (A lista completa de frases permanece aqui, inalterada)
+    const frasesDoAmor = [
+        "Hoje, e todos os dias, lembre-se: meu amor por você é a força mais constante da minha vida.", // Dia 1
+        "Você é a primeira pessoa que me vem à mente quando penso em felicidade.", // Dia 2
+        "Seu sorriso é o meu lugar favorito no mundo. Sorria muito hoje!", // Dia 3
+        "Cada momento ao seu lado se transforma em uma lembrança preciosa.", // Dia 4
+        "Que a paz que você me traz te acompanhe o dia todo.", // Dia 5
+        "Eu adoro a forma como você enxerga o mundo. É inspirador.", // Dia 6
+        "Você é a prova de que a vida pode ser um conto de fadas, se tivermos a pessoa certa.", // Dia 7
+        "O cheiro de café de manhã não é nada comparado à alegria de te ver despertar.", // Dia 8
+        "Sua voz é a minha melodia favorita. Espero ouvir ela bastante hoje.", // Dia 9
+        "Amo a maneira como você transforma o ordinário em extraordinário.", // Dia 10
+        "Você não é apenas meu amor, é meu porto seguro e meu melhor amigo.", // Dia 11
+        "Nenhuma distância seria grande demais para o meu coração chegar até você.", // Dia 12
+        "Obrigado(a) por ser a luz que ilumina meus dias mais escuros.", // Dia 13
+        "Se eu pudesse te dar algo, te daria a capacidade de se ver pelos meus olhos.", // Dia 14
+        "Você faz o meu coração bater em um ritmo mais alegre e acelerado.", // Dia 15
+        "Amo quando você se perde em seus pensamentos. É um charme único.", // Dia 16
+        "Sua bondade é uma qualidade que me faz te amar cada vez mais.", // Dia 17
+        "De todos os presentes que já recebi, o seu amor é o mais valioso.", // Dia 18
+        "Amo cada detalhe sobre você, especialmente aqueles que você nem percebe.", // Dia 19
+        "Um abraço seu resolve qualquer problema que eu possa estar enfrentando.", // Dia 20
+        "Nossa história é a minha favorita. Mal posso esperar pelo próximo capítulo.", // Dia 21
+        "Você me faz querer ser uma pessoa melhor todos os dias. Obrigado(a) por isso.", // Dia 22
+        "Que o seu dia seja tão lindo e radiante quanto a sua presença na minha vida.", // Dia 23
+        "Lembre-se: você é suficiente, você é amado(a) e você é importante.", // Dia 24
+        "Meu coração está em paz porque sei que ele encontrou o caminho de volta para você.", // Dia 25
+        "Amo a aventura de simplesmente viver a vida ao seu lado.", // Dia 26
+        "Você é a poesia que eu nunca soube escrever, mas que agora posso ler todos os dias.", // Dia 27
+        "Amo quando nossos olhos se encontram e o mundo inteiro para por um instante.", // Dia 28
+        "Seja quem for que você escolha ser hoje, saiba que eu te amo incondicionalmente.", // Dia 29
+        "Você é a resposta para todas as orações que eu nem sabia que estava fazendo.", // Dia 30
+        "Para mim, você é sinônimo de lar. Sinta-se em casa no meu coração.", // Dia 31
+        "Neste mês de corações, saiba que o meu é inteiramente seu.", // Dia 32 (1 Fev)
+        "Que você encontre a força em si mesmo(a) para brilhar hoje.", // Dia 33
+        "Amo a sua risada. É o som mais contagiante do universo.", // Dia 34
+        "Você é o meu 'eu te amo' de todas as manhãs, mesmo que eu não diga.", // Dia 35
+        "O melhor lugar para estar é enrolado(a) no seu abraço.", // Dia 36
+        "Se existisse um mapa da felicidade, você seria o destino final.", // Dia 37
+        "Seus pequenos gestos de carinho são os que mais tocam meu coração.", // Dia 38
+        "Sua presença transforma qualquer dia comum em um dia de sol.", // Dia 39
+        "Eu acredito em você, nos seus sonhos e na sua capacidade de vencer.", // Dia 40
+        "Amo te observar enquanto você está concentrado(a) em algo que ama.", // Dia 41
+        "Você me completa de maneiras que eu jamais imaginei serem possíveis.", // Dia 42
+        "Que a energia do nosso amor te proteja e te guie hoje.", // Dia 43
+        "Nós dois juntos? É a minha dupla favorita!", // Dia 44
+        "Hoje, lembre-se de ser gentil consigo mesmo(a). Você merece.", // Dia 45
+        "Amo a profundidade do seu olhar. Ele me conta histórias lindas.", // Dia 46
+        "A felicidade não é um destino, é o caminho que percorro ao seu lado.", // Dia 47
+        "Obrigado(a) por ser a pessoa que me incentiva a voar mais alto.", // Dia 48
+        "Você é o meu 'para sempre' em todas as minhas imaginações.", // Dia 49
+        "Que a sua alma encontre alegria e propósito em tudo que fizer hoje.", // Dia 50
+        "Amar você é fácil, leve e a coisa mais natural do mundo.", // Dia 51
+        "Você é a minha melhor companhia, seja no silêncio ou na conversa.", // Dia 52
+        "Nunca se canse de ser essa pessoa incrível que você é.", // Dia 53
+        "O meu presente preferido é o tempo que passamos juntos.", // Dia 54
+        "Amo como você me desafia e me faz crescer. Sou grato(a).", // Dia 55
+        "Você tem o poder de acalmar a tempestade dentro de mim.", // Dia 56
+        "Que a magia do nosso primeiro encontro permaneça em cada dia.", // Dia 57
+        "Você é a minha âncora nos dias de mar agitado.", // Dia 58
+        "O maior investimento da minha vida é o tempo que dedico a te amar.", // Dia 59
+        "Sua existência já é motivo suficiente para eu ter um dia feliz.", // Dia 60
+        "Vamos fazer de hoje mais um dia inesquecível na nossa coleção.", // Dia 61 (1 Mar)
+        "Saiba que você está nos meus pensamentos a cada minuto.", // Dia 62
+        "Você é a minha melhor versão, refletida no seu olhar.", // Dia 63
+        "Amo quando você está tão empolgado(a) com algo que nem consegue parar de falar.", // Dia 64
+        "Que a sua jornada hoje seja leve, iluminada e cheia de boas surpresas.", // Dia 65
+        "Você é o abraço que eu sempre quis encontrar no fim do dia.", // Dia 66
+        "Obrigado(a) por me fazer sentir único(a) e totalmente amado(a).", // Dia 67
+        "Amo a maneira como você lida com os seus desafios. Você é forte!", // Dia 68
+        "Se um dia eu for embora, voltarei imediatamente para o seu lado.", // Dia 69
+        "Você é a minha aventura favorita. Vamos nos perder juntos de novo?", // Dia 70
+        "Você é o detalhe que faltava para a minha vida ser completa.", // Dia 71
+        "Nossa conexão é mais forte do que qualquer palavra possa descrever.", // Dia 72
+        "Que você tenha a coragem de ser vulnerável e a força de ser invencível.", // Dia 73
+        "Amo sua autenticidade. Você é lindo(a) sendo exatamente quem é.", // Dia 74
+        "Você é a resposta para a pergunta 'o que é o amor?'", // Dia 75
+        "Saiba que você pode contar comigo para tudo, em qualquer hora e lugar.", // Dia 76
+        "Amo a sensação de segurança que sinto quando estou com você.", // Dia 77
+        "Você tem o dom de transformar dias ruins em boas lembranças.", // Dia 78
+        "Que a sua vida seja repleta de 'eu te amo' e muitos risos sinceros.", // Dia 79
+        "Você é a minha motivação. Vá e conquiste o mundo hoje!", // Dia 80
+        "Nossas diferenças nos tornam mais fortes e nosso amor mais profundo.", // Dia 81
+        "Você é a pessoa mais incrível que já conheci. Nunca duvide disso.", // Dia 82
+        "Que você encontre a felicidade nos pequenos momentos de hoje.", // Dia 83
+        "Meu coração te escolhe de novo, e de novo, e de novo.", // Dia 84
+        "Você me ensinou o verdadeiro significado da palavra parceria.", // Dia 85
+        "Amo as nossas tradições bobas e os nossos códigos secretos.", // Dia 86
+        "Você é o lado bom de todos os meus dias.", // Dia 87
+        "Amo a forma como você cuida das pessoas. É um privilégio ser cuidado(a) por você.", // Dia 88
+        "Que a leveza da sua alma inspire todos ao seu redor hoje.", // Dia 89
+        "Você é a minha pessoa favorita para dividir o silêncio.", // Dia 90
+        "Obrigado(a) por ser o meu presente diário de Deus.", // Dia 91
+        "Amo a sua inteligência e a curiosidade que move seus pensamentos.", // Dia 92 (1 Abr)
+        "Seja a mudança que você deseja ver no mundo. E eu estarei ao seu lado.", // Dia 93
+        "Você é a paz de espírito que eu busco em meio ao caos.", // Dia 94
+        "Um simples toque seu é capaz de curar qualquer ferida.", // Dia 95
+        "Que você seja recompensado(a) por toda a sua dedicação e esforço.", // Dia 96
+        "Meu amor por você é como o oceano: profundo, vasto e infinito.", // Dia 97
+        "Você é a minha inspiração. Vá e faça acontecer!", // Dia 98
+        "Amo a sua vulnerabilidade. Ela me permite te amar de verdade.", // Dia 99
+        "Cada dia com você é um presente que eu desembrulho com alegria.", // Dia 100
+        "Que você encontre razões para sorrir a cada hora de hoje.", // Dia 101
+        "Você é o meu sol da manhã e a minha estrela da noite.", // Dia 102
+        "Saiba que eu torço por você com todas as minhas forças.", // Dia 103
+        "Amo quando você me olha com aquele brilho nos olhos.", // Dia 104
+        "Você é a minha bússola, me guiando para o que realmente importa.", // Dia 105
+        "Obrigado(a) por ser o lado doce da minha vida.", // Dia 106
+        "Que o universo conspire a seu favor em todas as suas escolhas.", // Dia 107
+        "Amo a maneira como você me faz sentir seguro(a) e protegido(a).", // Dia 108
+        "Você me faz acreditar no poder do amor verdadeiro, todos os dias.", // Dia 109
+        "A melhor vista é aquela que eu tenho quando estou olhando para você.", // Dia 110
+        "Que a sua alma seja leve e o seu coração esteja em paz.", // Dia 111
+        "Você tem o dom de transformar lágrimas em risadas.", // Dia 112
+        "Nossa casa é um paraíso porque você mora nela.", // Dia 113
+        "Amo a sua determinação. Nada pode te parar!", // Dia 114
+        "Você é mais do que eu pedi, e tudo que eu sempre precisei.", // Dia 115
+        "Que você receba de volta toda a gentileza que você oferece ao mundo.", // Dia 116
+        "Você é a minha canção favorita, aquela que eu nunca canso de ouvir.", // Dia 117
+        "Amo nossa rotina. É nela que a mágica do nosso amor acontece.", // Dia 118
+        "Se o amor fosse tempo, eu te daria a eternidade.", // Dia 119
+        "Você é a pessoa que eu escolheria de novo, a cada vida.", // Dia 120
+        "Que a confiança que depositamos um no outro nos fortaleça hoje.", // Dia 121
+        "Você é a minha melhor decisão, a mais feliz e a mais acertada.", // Dia 122 (1 Mai)
+        "Obrigado(a) por ser a parte que eu mais amo em 'nós'.", // Dia 123
+        "Amo a forma como você cuida dos seus sonhos. Eles são lindos.", // Dia 124
+        "Que você tenha um dia cheio de momentos que te façam sorrir à toa.", // Dia 125
+        "Sua paixão pela vida é contagiante. Que ela nunca se apague.", // Dia 126
+        "Você é a razão pela qual eu acredito em finais felizes.", // Dia 127
+        "Amo o jeito descontraído que você lida com os pequenos imprevistos.", // Dia 128
+        "Que a alegria de estar junto de você me guie por todo o dia.", // Dia 129
+        "Você é a única pessoa que eu quero ao meu lado em todas as fotos.", // Dia 130
+        "Lembre-se: você é uma obra de arte única e insubstituível.", // Dia 131
+        "Amo o silêncio confortável que compartilhamos. É ouro.", // Dia 132
+        "Você me ensina todos os dias a ser paciente e a amar sem medidas.", // Dia 133
+        "Que você encontre a força para perdoar e a sabedoria para seguir em frente.", // Dia 134
+        "Você é o meu refúgio favorito quando o mundo se torna barulhento.", // Dia 135
+        "Obrigado(a) por me aceitar com todos os meus defeitos e manias.", // Dia 136
+        "Amo a sua generosidade. Você tem um coração gigante.", // Dia 137
+        "Seus abraços são o meu remédio para alma. Me sinto curado(a).", // Dia 138
+        "Você é a pessoa que transforma planos simples em memórias incríveis.", // Dia 139
+        "Que o seu caminho hoje seja de descobertas e realizações.", // Dia 140
+        "Você é o meu amor de cinema, com todos os clichês e a paixão verdadeira.", // Dia 141
+        "Amo a sua mente aberta e a sua capacidade de aprender.", // Dia 142
+        "Estar com você é como estar de férias da realidade. É mágico.", // Dia 143
+        "Você me faz sentir que eu posso conquistar o impossível.", // Dia 144
+        "Que a sua intuição seja a sua guia e a sua força.", // Dia 145
+        "Você é a minha recompensa por tudo que eu já fiz de bom na vida.", // Dia 146
+        "Amo quando você se permite ser bobo(a). Você fica ainda mais encantador(a).", // Dia 147
+        "Você é o meu maior e melhor investimento emocional.", // Dia 148
+        "Amo a maneira como você me escuta sem me julgar. Obrigado(a).", // Dia 149
+        "Que o nosso amor seja a inspiração para quem duvida da beleza da vida.", // Dia 150
+        "Você é a minha certeza em um mundo de incertezas.", // Dia 151
+        "No tabuleiro da vida, você é a minha rainha/meu rei.", // Dia 152
+        "Que o seu dia seja doce, cheio de amor e com sabor de beijo.", // Dia 153 (1 Jun)
+        "Você é o meu presente de 'Dia dos Namorados' em todos os dias do ano.", // Dia 154
+        "Amo como você me faz sentir a pessoa mais sortuda do universo.", // Dia 155
+        "Que a felicidade que você me proporciona te encontre hoje, em dobro.", // Dia 156
+        "Você me ensinou que o amor não é encontrar a perfeição, é amar a imperfeição.", // Dia 157
+        "Amo a sua coragem de ser quem você é, sem máscaras.", // Dia 158
+        "Que a sua força de vontade seja maior que qualquer obstáculo.", // Dia 159
+        "Você é o calor que me aquece nas manhãs mais frias da vida.", // Dia 160
+        "Obrigado(a) por ser a pessoa que me entende sem que eu precise falar.", // Dia 161
+        "Amo a forma como você expressa seus sentimentos. É lindo.", // Dia 162
+        "Que a sua essência brilhe e ilumine a vida de quem está perto.", // Dia 163
+        "Você é o meu vício mais saudável e a minha dose diária de euforia.", // Dia 164
+        "Amo a cumplicidade que construímos com tanto carinho.", // Dia 165
+        "Você é a melhor companhia para uma pizza, um filme ou uma viagem.", // Dia 166
+        "Que a sua vida seja um espetáculo de alegrias e realizações.", // Dia 167
+        "Você é o meu 'eu te amo' sussurrado na brisa da manhã.", // Dia 168
+        "Amo a sua paciência e o seu jeito carinhoso de me corrigir.", // Dia 169
+        "Você é a moldura perfeita para a pintura da minha vida.", // Dia 170
+        "Que a sua energia positiva contagie todos que cruzarem seu caminho.", // Dia 171
+        "Você é a razão pela qual eu acordo com um sorriso no rosto.", // Dia 172
+        "Amo a sua capacidade de ver o lado bom das coisas, sempre.", // Dia 173
+        "Você é a minha melodia favorita, a mais doce e harmoniosa.", // Dia 174
+        "Que o dia de hoje te traga a leveza que você merece.", // Dia 175
+        "Você é o meu crush eterno. Amo você mais a cada dia.", // Dia 176
+        "Amo o nosso 'ninho', o lar que construímos juntos, tijolo por tijolo.", // Dia 177
+        "Você é a estrela que me guia quando me perco no caminho.", // Dia 178
+        "Que a sua fé seja inabalável e os seus sonhos, realizáveis.", // Dia 179
+        "Você é a resposta para a minha busca por significado na vida.", // Dia 180
+        "Amo a sua risada alta e o seu coração puro.", // Dia 181
+        "Estamos na metade do ano, e meu amor por você só dobrou.", // Dia 182
+        "Que este novo mês nos traga novas aventuras e muito amor.", // Dia 183 (1 Jul)
+        "Você é o meu café, o meu chamego e o meu 'tudo' em uma pessoa só.", // Dia 184
+        "Amo a sua maturidade para lidar com as dificuldades da vida.", // Dia 185
+        "Que a sua paixão pelo que você faz seja a sua maior motivação.", // Dia 186
+        "Você é a pessoa que eu quero segurando minha mão até o último dia.", // Dia 187
+        "Amo a forma como você me surpreende com pequenos gestos de afeto.", // Dia 188
+        "Que você encontre o tempo para relaxar e recarregar suas energias.", // Dia 189
+        "Você é o meu refúgio, meu lugar de paz e tranquilidade.", // Dia 190
+        "Obrigado(a) por ter a chave do meu coração e cuidar tão bem dele.", // Dia 191
+        "Amo a nossa sintonia, a forma como pensamos igual às vezes.", // Dia 192
+        "Que a sua bondade seja retribuída com bênçãos infinitas.", // Dia 193
+        "Você é o que me faz querer voltar para casa correndo no fim do dia.", // Dia 194
+        "Amo o seu senso de humor. Rir com você é a melhor terapia.", // Dia 195
+        "Você é a minha pessoa, aquela que entende meus silêncios.", // Dia 196
+        "Que a sua criatividade te leve a lugares incríveis hoje.", // Dia 197
+        "Você é a melhor parte dos meus planos futuros.", // Dia 198
+        "Amo a sua capacidade de me perdoar e de seguir em frente.", // Dia 199
+        "Você é o abraço que eu preciso quando estou desanimado(a).", // Dia 200
+        "Que você encontre a beleza nas coisas simples da vida.", // Dia 201
+        "Você é o meu sol de inverno, me aquecendo com o seu amor.", // Dia 202
+        "Amo o seu jeito de ser, sem pressa, mas cheio de intenção.", // Dia 203
+        "Você é o meu eterno namorado(a), marido/esposa, companheiro(a) de alma.", // Dia 204
+        "Que a sua mente esteja focada nas suas metas e sonhos.", // Dia 205
+        "Você me faz esquecer dos problemas e viver o presente.", // Dia 206
+        "Amo a sua dedicação em fazer o que é certo, sempre.", // Dia 207
+        "Você é o meu tesouro mais precioso. Eu te guardo no peito.", // Dia 208
+        "Que a sua energia seja renovada e a sua alma, restaurada.", // Dia 209
+        "Você é a prova de que o amor verdadeiro existe e é lindo.", // Dia 210
+        "Amo a sua capacidade de sonhar grande e correr atrás.", // Dia 211
+        "Você me faz sentir que o amanhã sempre será melhor.", // Dia 212
+        "Que o nosso amor seja a nossa maior força contra o mundo.", // Dia 213
+        "Que este mês nos traga clareza, propósito e muito carinho.", // Dia 214 (1 Ago)
+        "Você é a pessoa que me ensinou a amar de verdade, sem medo.", // Dia 215
+        "Amo o seu cheiro. É o meu aroma favorito no mundo.", // Dia 216
+        "Que você encontre a motivação para fazer o que precisa ser feito.", // Dia 217
+        "Você é o meu bilhete premiado, o presente que a vida me deu.", // Dia 218
+        "Amo a sua forma de se vestir, o seu estilo, a sua presença.", // Dia 219
+        "Que a sua saúde mental seja sua prioridade hoje e sempre.", // Dia 220
+        "Você é o meu parceiro(a) de crime, meu confidente, meu tudo.", // Dia 221
+        "Obrigado(a) por ser o meu chão e a minha base sólida.", // Dia 222
+        "Amo a sua leveza. Estar com você é sempre um alívio.", // Dia 223
+        "Que a sua sabedoria te guie nas decisões importantes de hoje.", // Dia 224
+        "Você é o meu amor platônico que se tornou realidade. Sou grato(a).", // Dia 225
+        "Amo quando você me conta seus sonhos e medos. Confio em você.", // Dia 226
+        "Você é a pessoa que eu admiro profundamente. Seu caráter é impecável.", // Dia 227
+        "Que a sua jornada hoje seja marcada por gentileza e empatia.", // Dia 228
+        "Você é o que me tira da cama e me faz querer encarar o dia.", // Dia 229
+        "Amo a sua simplicidade. Você não precisa de muito para ser feliz.", // Dia 230
+        "Você é o meu refúgio silencioso, onde a paz se instala.", // Dia 231
+        "Que o seu coração se encha de gratidão pelas pequenas coisas.", // Dia 232
+        "Você é a minha melhor descoberta. Que sorte a minha!", // Dia 233
+        "Amo a nossa rotina noturna, quando o mundo para e somos só nós.", // Dia 234
+        "Você me inspira a ser mais criativo(a) e audacioso(a).", // Dia 235
+        "Que a sua força interior te sustente em todos os momentos.", // Dia 236
+        "Você é a pessoa que eu escolheria para passar o resto dos meus dias.", // Dia 237
+        "Amo o seu senso de justiça. Você sempre defende o que é certo.", // Dia 238
+        "Você me faz sentir que sou a pessoa mais especial do mundo.", // Dia 239
+        "Que a sua felicidade seja a sua bússola. Siga o que te faz bem.", // Dia 240
+        "Você é a minha definição de perfeição. Amo você por completo.", // Dia 241
+        "Amo a forma como você lida com seus erros. Você sempre aprende.", // Dia 242
+        "Você é o meu espelho. Reflete o que há de melhor em mim.", // Dia 243
+        "Que a beleza do seu coração se reflita em tudo que você tocar hoje.", // Dia 244
+        "Que este mês da primavera nos traga renovação e flores no coração.", // Dia 245 (1 Set)
+        "Você é a pessoa que me acalma com um olhar e me anima com um beijo.", // Dia 246
+        "Amo a sua maneira de ver a vida: com otimismo e esperança.", // Dia 247
+        "Que você tenha a sabedoria para soltar o que não te serve mais.", // Dia 248
+        "Você é o meu porto seguro, meu lugar de descanso e paz.", // Dia 249
+        "Amo o seu abraço. É o lugar onde todos os meus medos desaparecem.", // Dia 250
+        "Você é a minha música favorita, aquela que eu canto baixinho.", // Dia 251
+        "Que a sua jornada seja abençoada com encontros felizes.", // Dia 252
+        "Você é o meu paraíso particular, meu cantinho de felicidade.", // Dia 253
+        "Amo a sua dedicação aos seus amigos e à sua família. É lindo.", // Dia 254
+        "Você me inspira a ser mais honesto(a) e transparente.", // Dia 255
+        "Que a sua voz seja ouvida e a sua opinião, respeitada.", // Dia 256
+        "Você é o meu eterno bom dia e a minha mais sincera boa noite.", // Dia 257
+        "Amo quando você se permite ser criança. Isso me encanta.", // Dia 258
+        "Você me faz sentir que todos os meus sonhos são válidos e possíveis.", // Dia 259
+        "Que a leveza da sua alma te guie por um dia sem preocupações.", // Dia 260
+        "Você é a minha outra metade, a peça que faltava no meu quebra-cabeça.", // Dia 261
+        "Amo a sua perseverança. Você nunca desiste dos seus objetivos.", // Dia 262
+        "Você é a pessoa que eu amo sem motivo, apenas por ser você.", // Dia 263
+        "Que a sua beleza interior brilhe mais forte que qualquer luz.", // Dia 264
+        "Você é o meu crush de todas as manhãs. Ainda sinto borboletas.", // Dia 265
+        "Amo a sua capacidade de se reinventar e de recomeçar.", // Dia 266
+        "Você é o meu amor, meu amigo, meu confidente e meu maior fã.", // Dia 267
+        "Que a sua vida seja um jardim florido de alegrias.", // Dia 268
+        "Você é a minha sorte grande. Ganhei na loteria do amor.", // Dia 269
+        "Amo as nossas longas conversas, cheias de risadas e cumplicidade.", // Dia 270
+        "Você me faz acreditar no 'e viveram felizes para sempre'.", // Dia 271
+        "Que a sua paciência seja sua aliada e sua calma, sua força.", // Dia 272
+        "Você é a minha pessoa favorita para fazer planos de futuro.", // Dia 273
+        "Que este mês nos traga maturidade e muita colheita de bons frutos.", // Dia 274 (1 Out)
+        "Você é a resposta que eu sempre quis encontrar na minha vida.", // Dia 275
+        "Amo o seu senso de humor irônico. Ele me diverte muito.", // Dia 276
+        "Que você tenha um dia de foco, produtividade e muita inspiração.", // Dia 277
+        "Você é o meu raio de sol em dias nublados e a minha estrela guia.", // Dia 278
+        "Amo a sua capacidade de se colocar no lugar do outro. Você é empático(a).", // Dia 279
+        "Você me ensinou que o amor é a melhor aventura de todas.", // Dia 280
+        "Que a sua energia seja contagiante e o seu sorriso, inesquecível.", // Dia 281
+        "Você é o meu 'eu te amo' em todas as línguas e em todos os dias.", // Dia 282
+        "Amo o nosso cantinho, o nosso ninho, o nosso lar de amor.", // Dia 283
+        "Você é a minha melhor escolha. Faria tudo de novo, mil vezes.", // Dia 284
+        "Que a sua vida seja cheia de memórias que valem a pena guardar.", // Dia 285
+        "Você é a pessoa que eu admiro em silêncio e amo em voz alta.", // Dia 286
+        "Amo a sua coragem de dizer 'não' quando é necessário. Você é firme.", // Dia 287
+        "Você me faz sentir que a vida é um presente a ser celebrado.", // Dia 288
+        "Que a sua jornada seja leve, guiada pela sua própria luz.", // Dia 289
+        "Você é a minha dose diária de inspiração e motivação.", // Dia 290
+        "Amo a sua mão na minha. É a sensação mais segura do mundo.", // Dia 291
+        "Você é o meu amor, a minha alma gêmea, o meu destino.", // Dia 292
+        "Que a sua alma encontre a paz que ela tanto merece hoje.", // Dia 293
+        "Você é a pessoa que transforma um dia ruim em um dia suportável.", // Dia 294
+        "Amo o seu beijo. É o meu sabor favorito e o meu vício.", // Dia 295
+        "Você é o meu 'sempre' em todos os momentos de 'agora'.", // Dia 296
+        "Que a sua fé te fortaleça e a sua esperança se renove.", // Dia 297
+        "Você me faz sentir que eu pertenço a algum lugar. Obrigado(a).", // Dia 298
+        "Amo a forma como você cuida de mim. É um privilégio ser amado(a) por você.", // Dia 299
+        "Você é a pessoa que eu escolheria para ver o pôr do sol todos os dias.", // Dia 300
+        "Que a sua vida seja um ciclo infinito de boas notícias.", // Dia 301
+        "Você é a minha bússola, me mostrando o caminho de casa.", // Dia 302
+        "Amo a sua risada gostosa. É o som mais lindo que existe.", // Dia 303
+        "Você é o meu tesouro escondido, o meu achado mais precioso.", // Dia 304
+        "Que este mês nos traga reflexão, união e muita gratidão.", // Dia 305 (1 Nov)
+        "Você é a minha certeza em um mundo de dúvidas. Amo você.", // Dia 306
+        "Amo a sua garra de lutar pelos seus ideais. Você me inspira.", // Dia 307
+        "Que você receba de volta todo o bem que você espalha por aí.", // Dia 308
+        "Você é o meu abraço de urso, apertado e cheio de amor.", // Dia 309
+        "Amo o seu toque suave e o seu carinho que me acalma.", // Dia 310
+        "Você me faz sentir que eu posso ser vulnerável e ainda assim forte.", // Dia 311
+        "Que a sua autenticidade seja a sua marca registrada hoje.", // Dia 312
+        "Você é a pessoa que me ensinou o que é o amor incondicional.", // Dia 313
+        "Amo a sua capacidade de se reerguer após a queda. Você é resiliente.", // Dia 314
+        "Você é o meu presente de aniversário que dura o ano inteiro.", // Dia 315
+        "Que você tenha um dia de paz, sem pressa, apenas de bem-estar.", // Dia 316
+        "Você é a minha melodia favorita em um mundo de ruídos.", // Dia 317
+        "Amo a sua sinceridade. A verdade que sai de você é a mais bonita.", // Dia 318
+        "Você é a minha pessoa, a minha alma gêmea, o meu amor.", // Dia 319
+        "Que a sua vida seja cheia de motivos para agradecer.", // Dia 320
+        "Você me faz sentir que o nosso amor é indestrutível. E é.", // Dia 321
+        "Amo a forma como você me olha. Seu olhar me diz tudo.", // Dia 322
+        "Você é a minha melhor companhia para uma taça de vinho e boas conversas.", // Dia 323
+        "Que a sua jornada seja marcada por sucessos e felicidade.", // Dia 324
+        "Você é o meu porto seguro, meu farol na escuridão.", // Dia 325
+        "Amo a sua humildade. Você é grande e ainda assim, simples.", // Dia 326
+        "Você me ensinou que amar é uma escolha diária, e eu escolho você.", // Dia 327
+        "Que a sua alegria de viver seja a sua marca registrada.", // Dia 328
+        "Você é o meu anjo da guarda, me protegendo e me guiando.", // Dia 329
+        "Amo a sua paixão pelas coisas simples da vida. Isso me encanta.", // Dia 330
+        "Você é a pessoa que eu amo por completo, alma, corpo e coração.", // Dia 331
+        "Que você tenha a ousadia de sonhar e a garra de realizar.", // Dia 332
+        "Você me faz sentir que vale a pena lutar por um futuro ao seu lado.", // Dia 333
+        "Amo a nossa história, construída com tanto amor e dedicação.", // Dia 334
+        "Que este mês de festas seja cheio de amor, luz e celebração.", // Dia 335 (1 Dez)
+        "Você é o meu presente de Natal mais precioso de todos os anos.", // Dia 336
+        "Amo o seu espírito festivo. Você transforma tudo em festa.", // Dia 337
+        "Que a magia do nosso amor te envolva e te proteja hoje.", // Dia 338
+        "Você é o meu motivo para agradecer a Deus todos os dias.", // Dia 339
+        "Amo quando você está tão concentrado(a) em fazer o bem. Você é especial.", // Dia 340
+        "Você me ensinou a amar a vida com todas as suas surpresas.", // Dia 341
+        "Que a sua paz interior seja a sua maior riqueza.", // Dia 342
+        "Você é a pessoa que eu quero ao meu lado na virada de ano.", // Dia 343
+        "Amo a sua capacidade de se renovar. Você é forte e sábio(a).", // Dia 344
+        "Você é o meu 'sim' mais sincero, o meu 'eu te amo' mais verdadeiro.", // Dia 345
+        "Que o seu sorriso seja o cartão de visitas da sua alma.", // Dia 346
+        "Você me faz sentir que todos os dias são uma celebração.", // Dia 347
+        "Amo a sua persistência em correr atrás do que você acredita.", // Dia 348
+        "Você é o meu sonho que se tornou realidade, o meu milagre.", // Dia 349
+        "Que a sua vida seja cheia de luz, paz e prosperidade.", // Dia 350
+        "Você é a minha melhor metade, a que me completa em tudo.", // Dia 351
+        "Amo a forma como você se preocupa com os outros. Seu coração é puro.", // Dia 352
+        "Você me faz sentir que o futuro é brilhante, só por estar com você.", // Dia 353
+        "Que a sua jornada seja pavimentada com flores e amor.", // Dia 354
+        "Você é a pessoa que eu escolheria para construir uma vida.", // Dia 355
+        "Amo a sua inteligência emocional. Você lida com tudo com calma.", // Dia 356
+        "Você me ensinou que o amor é a única coisa que cresce quando é dividido.", // Dia 357
+        "Que a sua alma esteja em festa, cheia de alegria e gratidão.", // Dia 358
+        "Você é a minha sorte. Sou eternamente grato(a) por ter você.", // Dia 359
+        "Amo a forma como você transforma os problemas em oportunidades.", // Dia 360
+        "Você é a pessoa que faz o meu mundo girar no ritmo certo.", // Dia 361
+        "Que a nossa união seja a prova viva do poder do amor.", // Dia 362
+        "Você é o meu presente de despedida do ano. O melhor de todos.", // Dia 363
+        "Amo você. E essa é a única certeza que eu preciso ter hoje.", // Dia 364
+        "No último dia do ano, reafirmo: meu coração te escolhe de novo, e de novo, e de novo.", // Dia 365
+    ];
+
+    // --- LÓGICA DE EXIBIÇÃO ---
+
+    function exibirMensagem() {
+        // Usa a variável que você editou no topo do script.
+        const nomeParaExibir = nomeDoPresenteado.trim();
+
+        if (!nomeParaExibir || nomeParaExibir === "Insira o Nome Aqui") {
+            // Caso você esqueça de preencher, o código avisa
+            document.getElementById('mensagem').innerHTML = "ERRO: Por favor, preencha o nome na linha 6 do script antes de salvar o arquivo!";
+            document.getElementById('dia-do-ano').innerText = "Personalização Necessária";
+            return;
+        }
+
+        // 3. CÁLCULO DO DIA DO ANO (0 a 364)
+        const agora = new Date();
+        const inicioDoAno = new Date(agora.getFullYear(), 0, 1);
+        const diferencaEmMilissegundos = agora - inicioDoAno;
+        const umDiaEmMilissegundos = 1000 * 60 * 60 * 24; 
+        
+        // Calcula o número do dia, de 1 a 365/366
+        let diaDoAno = Math.floor(diferencaEmMilissegundos / umDiaEmMilissegundos) + 1;
+        
+        // Garante que o índice não extrapole o tamanho do array de 365
+        const indiceDaFrase = (diaDoAno - 1) % frasesDoAmor.length;
+
+        // Pega a frase do dia
+        const fraseDoDia = frasesDoAmor[indiceDaFrase] || "O amor é a resposta para tudo. Te amo!";
+
+        // 4. MONTAGEM DA MENSAGEM FINAL (Formato: [Nome], [Frase do Dia])
+        
+        // Capitaliza apenas a primeira letra do nome, se não for uma frase
+        // A intenção é que se o nome for "Meu Amor", ele não vire "Meu amor".
+        const nomeFormatado = nomeParaExibir.charAt(0).toUpperCase() + nomeParaExibir.slice(1);
+
+        const mensagemCompleta = `${nomeFormatado}, ${fraseDoDia}`;
+
+        // 5. INSERÇÃO NO HTML
+        document.getElementById('mensagem').innerText = mensagemCompleta;
+        document.getElementById('dia-do-ano').innerText = `Mensagem do Dia ${diaDoAno}`;
+    }
+
+    // A função é chamada quando a página carrega
+    exibirMensagem();
+</script>
+
+</body>
+</html>
